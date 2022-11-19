@@ -22,7 +22,8 @@ WHERE
 LIMIT 100000;
 ```
 
-Note: there is a `label` column.
+Note: the `#standardSQL` comment at the beginning  
+Note: there is a `label` column.  
 
 # Model info & training statistics
 Click on model name to get information about it.  
@@ -31,7 +32,7 @@ Under `Training Stats`, you should see a table similar to this:
 
 <img src="https://raw.githubusercontent.com/gosia-b/gcp/main/1_bigquery_ml/images/training_stats.png" width=50%>
 
-# Evaluate model
+# Evaluate the model
 ```sql
 #standardSQL
 SELECT
@@ -56,6 +57,33 @@ If used with a a logistic regression model, the above query returns the followin
 Note: we're calling `ml.EVALUATE`  
 
 You should see a table similar to this:
+
+<img src="https://raw.githubusercontent.com/gosia-b/gcp/main/1_bigquery_ml/images/evaluation.png" width=50%>
+
+# Use the model
+Predict purchases by country:
+```sql
+#standardSQL
+SELECT
+  country,
+  SUM(predicted_label) as total_predicted_purchases
+FROM
+  ml.PREDICT(MODEL `bqml_codelab.sample_model`, (
+SELECT
+  IFNULL(device.operatingSystem, "") AS os,
+  device.isMobile AS is_mobile,
+  IFNULL(totals.pageviews, 0) AS pageviews,
+  IFNULL(geoNetwork.country, "") AS country
+FROM
+  `bigquery-public-data.google_analytics_sample.ga_sessions_*`
+WHERE
+  _TABLE_SUFFIX BETWEEN '20170701' AND '20170801'))
+GROUP BY country
+ORDER BY total_predicted_purchases DESC
+LIMIT 10;
+```
+
+Note: we're calling `ml.PREDICT`
 
 # Reference
 [Codelabs - Getting started with BigQuery ML](https://codelabs.developers.google.com/codelabs/bqml-intro)  
