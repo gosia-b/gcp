@@ -30,7 +30,7 @@ Click on model name to get information about it.
 Under `Details`, you should find some basic model info and training options used to produce the model.  
 Under `Training Stats`, you should see a table similar to this:
 
-<img src="https://raw.githubusercontent.com/gosia-b/gcp/main/1_bigquery_ml/images/training_stats.png" width=50%>
+<img src="https://raw.githubusercontent.com/gosia-b/gcp/main/1_bigquery_ml/1_getting_started/images/training_stats.png" width=50%>
 
 # Evaluate the model
 ```sql
@@ -58,7 +58,7 @@ Note: we're calling `ml.EVALUATE`
 
 You should see a table similar to this:
 
-<img src="https://raw.githubusercontent.com/gosia-b/gcp/main/1_bigquery_ml/images/evaluation.png" width=50%>
+<img src="https://raw.githubusercontent.com/gosia-b/gcp/main/1_bigquery_ml/1_getting_started/images/evaluation.png" width=50%>
 
 # Use the model
 Predict purchases by country:
